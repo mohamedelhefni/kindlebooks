@@ -382,7 +382,7 @@
                                 text-center
                                 w-1/2
                               "
-                              :data-id="book.id"
+                              :data-id="book._id"
                               v-on:click="saveBook(book)"
                             >
                               {{ !book.isFav ? "مفضله" : "ازاله" }}
@@ -646,8 +646,8 @@
                   text-center
                   w-1/2
                 "
-                @click="downloadBook(book.drive_id)"
-                v-bind:href="'https://drive.google.com/uc?id='+ book.drive_id +'&export=download'"
+                @click="downloadBook(book.driveId)"
+                v-bind:href="'https://drive.google.com/uc?id='+ book.driveId +'&export=download'"
                 target="_blank"
               >
                 <span class="mt-2">تحميل</span>

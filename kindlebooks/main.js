@@ -22,7 +22,7 @@ const EventHandling = {
   methods: {
     async initData() {
       await axios
-        .get("https://kindlebooks.herokuapp.com/")
+        .get("http://127.0.0.1:3000/books/")
         .then((data) => {
           this.books = data.data.books;
           this.totalBooks = data.data.pagination.total;
@@ -47,7 +47,7 @@ const EventHandling = {
           this.saved = JSON.parse(localStorage.getItem("savedBooks"));
           await this.books.map((book) => {
             this.saved.forEach((savedBook) => {
-              if (book.id == savedBook.id) {
+              if (book._id == savedBook._id) {
                 book.isFav = true;
               }
             });
@@ -64,7 +64,7 @@ const EventHandling = {
       this.query.split(" ").join("_");
       axios
         .get(
-          `https://kindlebooks.herokuapp.com/search/${this.query}/page/${this.currentPage}`
+          `http://127.0.0.1:3000/books/search/${this.query}/page/${this.currentPage}`
         )
         .then((data) => {
           this.books = data.data.books;
@@ -83,13 +83,10 @@ const EventHandling = {
         });
     },
     getPage(page = 1) {
-      // const state = { "page_id": page };
-      // const title = "كتب كندل";
       this.loading = true;
       const url = this.query.length
         ? `https://kindlebooks.herokuapp.com/search/${this.query}/page/${page}`
         : `https://kindlebooks.herokuapp.com/${page}`;
-      // history.pushState(state, title, url);
       axios
         .get(url)
         .then((data) => {
@@ -109,10 +106,10 @@ const EventHandling = {
         });
     },
     downloadBook(drive_id) {
-      const data = new FormData();
-      data.append("driveId", drive_id);
       axios
-        .post("https://kindlebooks.herokuapp.com/download", data)
+        .post("http://127.0.0.1:3000/books/download", {
+          driveId: drive_id,
+        })
         .then(function (response) {
           console.log(response);
         })
@@ -122,7 +119,9 @@ const EventHandling = {
     },
     saveBook(book) {
       if (book.isFav) {
-        this.saved = this.saved.filter((savedBook) => book.id != savedBook.id);
+        this.saved = this.saved.filter(
+          (savedBook) => book._id != savedBook._id
+        );
         this.storeSaved();
       } else {
         this.saved.push(book);
