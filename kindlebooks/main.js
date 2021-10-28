@@ -22,7 +22,7 @@ const EventHandling = {
   methods: {
     async initData() {
       await axios
-        .get("http://127.0.0.1:3000/books/")
+        .get("http://127.0.0.1:3000/books/1")
         .then((data) => {
           this.books = data.data.books;
           this.totalBooks = data.data.pagination.total;
@@ -85,8 +85,8 @@ const EventHandling = {
     getPage(page = 1) {
       this.loading = true;
       const url = this.query.length
-        ? `https://kindlebooks.herokuapp.com/search/${this.query}/page/${page}`
-        : `https://kindlebooks.herokuapp.com/${page}`;
+        ? `http://127.0.0.1:3000/books/search/${this.query}/page/${page}`
+        : `http://127.0.0.1:3000/books/${page}`;
       axios
         .get(url)
         .then((data) => {
