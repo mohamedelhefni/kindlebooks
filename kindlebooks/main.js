@@ -22,7 +22,7 @@ const EventHandling = {
   methods: {
     async initData() {
       await axios
-        .get("http://127.0.0.1:3000/books/1")
+        .get("https://kindlebooks.onrender.com/books/1")
         .then((data) => {
           this.books = data.data.books;
           this.totalBooks = data.data.pagination.total;
@@ -64,7 +64,7 @@ const EventHandling = {
       this.query.split(" ").join("_");
       axios
         .get(
-          `http://127.0.0.1:3000/books/search/${this.query}/page/${this.currentPage}`
+          `https://kindlebooks.onrender.com/books/search/${this.query}/page/${this.currentPage}`
         )
         .then((data) => {
           this.books = data.data.books;
@@ -85,8 +85,8 @@ const EventHandling = {
     getPage(page = 1) {
       this.loading = true;
       const url = this.query.length
-        ? `http://127.0.0.1:3000/books/search/${this.query}/page/${page}`
-        : `http://127.0.0.1:3000/books/${page}`;
+        ? `https://kindlebooks.onrender.com/books/search/${this.query}/page/${page}`
+        : `https://kindlebooks.onrender.com/books/${page}`;
       axios
         .get(url)
         .then((data) => {
@@ -107,7 +107,7 @@ const EventHandling = {
     },
     downloadBook(drive_id) {
       axios
-        .post("http://127.0.0.1:3000/books/download", {
+        .post("https://kindlebooks.onrender.com/books/download", {
           driveId: drive_id,
         })
         .then(function (response) {
